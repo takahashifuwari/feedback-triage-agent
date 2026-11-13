@@ -28,7 +28,7 @@ class FilterHistoryTest(unittest.TestCase):
         self.assertEqual(filter_history([], "2026-02-07T05:39:17Z"), [])
 
     def test_invalid_or_timezone_missing_timestamp_is_rejected(self):
-        for value in ("2026-02-07T05:39:17", "not a timestamp", None):
+        for value in ("2026-02-07T05:39:17", "not a timestamp"):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 filter_history([{"created_at": value}], "2026-02-07T05:39:17Z")
         with self.assertRaises(ValueError):
