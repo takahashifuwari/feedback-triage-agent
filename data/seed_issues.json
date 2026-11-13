@@ -1,5 +1,78 @@
 [
   {
+    "issue_number": 211807,
+    "created_at": "2024-05-01T20:16:37Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/211807",
+    "title": "Odia conjuncts display incorrectly in the terminal",
+    "symptom_summary": "Printing Odia words in the integrated terminal produces malformed conjunct characters, including with extensions disabled.",
+    "os_version": "macOS Sonoma 14.4.1",
+    "vscode_version": "1.74.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Print an Odia word containing conjunct characters in the integrated terminal."
+    ]
+  },
+  {
+    "issue_number": 212832,
+    "created_at": "2024-05-15T18:46:02Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/212832",
+    "title": "Unicode sample renders incorrectly with Cascadia Mono",
+    "symptom_summary": "A Unicode sample displays some characters incorrectly in the VS Code terminal when using Cascadia Mono. The reporter says the same sample looks correct in Windows Terminal.",
+    "os_version": "Windows 21H1 build 19043.1526",
+    "vscode_version": "1.89.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Install Cascadia Code 2404.23 and select Cascadia Mono.",
+      "Display the linked Unicode sample in the integrated terminal."
+    ]
+  },
+  {
+    "issue_number": 224582,
+    "created_at": "2024-08-02T12:38:56Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/224582",
+    "title": "Command Prompt and PowerShell open to a blank terminal",
+    "symptom_summary": "On one Windows machine, both Command Prompt and PowerShell 7 display an empty integrated terminal that accepts no commands.",
+    "os_version": "Windows x64 6.0.6000",
+    "vscode_version": "1.87.2",
+    "shell": "Command Prompt and PowerShell 7",
+    "error_message": null,
+    "repro_steps": [
+      "Open Command Prompt or PowerShell 7 in the integrated terminal.",
+      "Try to enter a command."
+    ]
+  },
+  {
+    "issue_number": 225119,
+    "created_at": "2024-08-08T08:44:51Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/225119",
+    "title": "Long Node.js launch command stops partway through terminal input",
+    "symptom_summary": "Launching Node.js with a long PATH leaves the command partially entered. A project launch configuration with a shorter PATH works for the reporter.",
+    "os_version": "macOS 13.2.1",
+    "vscode_version": "1.92.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Set a default PATH longer than 2048 characters.",
+      "Launch a Node.js instance through VS Code."
+    ]
+  },
+  {
+    "issue_number": 226915,
+    "created_at": "2024-08-28T01:04:53Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/226915",
+    "title": "Terminal panel closes as soon as it is opened",
+    "symptom_summary": "Opening the integrated terminal or its bottom panel causes it to close immediately. Selecting a different default terminal made no difference.",
+    "os_version": "Windows x64 10.0.22631",
+    "vscode_version": "1.92.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Open the integrated terminal or its bottom panel."
+    ]
+  },
+  {
     "issue_number": 227137,
     "created_at": "2024-08-29T18:45:43Z",
     "source_url": "https://github.com/microsoft/vscode/issues/227137",
@@ -9,7 +82,256 @@
     "vscode_version": "1.93.0-insider",
     "shell": "PowerShell",
     "error_message": null,
-    "repro_steps": ["Print more lines than the visible area.", "Expand and collapse the terminal view several times."]
+    "repro_steps": [
+      "Print more lines than the visible area.",
+      "Expand and collapse the terminal view several times."
+    ]
+  },
+  {
+    "issue_number": 227498,
+    "created_at": "2024-09-04T00:37:16Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/227498",
+    "title": "Ctrl+C does not interrupt Python in the integrated terminal",
+    "symptom_summary": "Ctrl+C fails to interrupt a running Python process in the integrated terminal, while it works in the standalone macOS Terminal.",
+    "os_version": "macOS Mojave 10.14.6",
+    "vscode_version": "1.85.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Run a Python process in the integrated terminal.",
+      "Press Ctrl+C."
+    ]
+  },
+  {
+    "issue_number": 228098,
+    "created_at": "2024-09-10T11:46:45Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/228098",
+    "title": "Integrated terminal crashes on opening",
+    "symptom_summary": "The reporter says the terminal crashes when opened. The report gives no error details.",
+    "os_version": "Windows x64 10.0.22631",
+    "vscode_version": "1.93.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Open the integrated terminal."
+    ]
+  },
+  {
+    "issue_number": 229656,
+    "created_at": "2024-09-25T04:28:30Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/229656",
+    "title": "Terminal output is misaligned until the panel is resized",
+    "symptom_summary": "Running a Python script produces misaligned terminal text. Dragging the panel boundary restores alignment.",
+    "os_version": "Windows 10 Pro 22H2",
+    "vscode_version": "1.93.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Open the sidebar or panel and run a simple Python program.",
+      "Drag the panel boundary and observe whether the output realigns."
+    ]
+  },
+  {
+    "issue_number": 231625,
+    "created_at": "2024-10-18T02:10:51Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/231625",
+    "title": "Terminal cannot find the PowerShell executable",
+    "symptom_summary": "Opening a new terminal fails because the configured Windows PowerShell executable cannot be found.",
+    "os_version": "Windows x64 10.0.18363",
+    "vscode_version": "1.94.2",
+    "shell": "Windows PowerShell",
+    "error_message": "Path to shell executable does not exist",
+    "repro_steps": [
+      "Open a new terminal using the configured PowerShell executable."
+    ]
+  },
+  {
+    "issue_number": 234916,
+    "created_at": "2024-11-29T21:43:07Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/234916",
+    "title": "Terminal stops accepting commands after running Dart",
+    "symptom_summary": "After a few Dart commands, the terminal stops responding to further input.",
+    "os_version": "Windows x64 10.0.26120",
+    "vscode_version": "1.95.3",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Run several Dart commands in the terminal.",
+      "Try to enter another command."
+    ]
+  },
+  {
+    "issue_number": 236161,
+    "created_at": "2024-12-15T12:48:41Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/236161",
+    "title": "Python terminal reactivation remains in progress",
+    "symptom_summary": "VS Code keeps reactivating the terminals without making them usable for Python. The report includes an environment resolution error.",
+    "os_version": "Windows x64 10.0.19045",
+    "vscode_version": "1.96.0",
+    "shell": null,
+    "error_message": "Failed to resolve env",
+    "repro_steps": []
+  },
+  {
+    "issue_number": 239917,
+    "created_at": "2025-02-07T10:01:30Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/239917",
+    "title": "Drag-and-drop terminal split renders text twice",
+    "symptom_summary": "After dragging one terminal tab beside another terminal's content, the split view renders terminal content twice.",
+    "os_version": null,
+    "vscode_version": null,
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Open two terminals.",
+      "Drag the first terminal tab to the right edge of the second terminal's content."
+    ]
+  },
+  {
+    "issue_number": 243294,
+    "created_at": "2025-03-12T04:01:21Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/243294",
+    "title": "Empty terminal cannot run npm commands",
+    "symptom_summary": "The integrated terminal appears blank, and the reporter cannot run npm commands from it.",
+    "os_version": "Windows x64 10.0.19045",
+    "vscode_version": "1.98.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 252018,
+    "created_at": "2025-06-20T21:01:58Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/252018",
+    "title": "Large input to a busy subprocess freezes all terminals",
+    "symptom_summary": "Pasting long input into an unresponsive subprocess makes integrated terminals across VS Code windows freeze and triggers a PTY host warning.",
+    "os_version": "macOS 15.5 (24F74)",
+    "vscode_version": "1.101.1 and 1.100.3",
+    "shell": null,
+    "error_message": "PTY Host process is unresponsive",
+    "repro_steps": [
+      "Start an R session in the terminal.",
+      "Paste commands that pause R and send long input while it is busy."
+    ]
+  },
+  {
+    "issue_number": 254047,
+    "created_at": "2025-07-04T07:08:19Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/254047",
+    "title": "Terminal accessibility buffer cannot reach earlier output",
+    "symptom_summary": "Using NVDA, the reporter can read only the recent portion of long terminal output in the accessibility buffer.",
+    "os_version": "Windows x64 10.0.19045",
+    "vscode_version": "1.101.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Open the terminal accessibility buffer with Alt+F2 after generating long output.",
+      "Try to scroll back to the first line."
+    ]
+  },
+  {
+    "issue_number": 256244,
+    "created_at": "2025-07-16T12:53:08Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/256244",
+    "title": "Large blank gaps appear after terminal commands",
+    "symptom_summary": "The reporter sees excess vertical space between each command and its output after cleaning the Windows system.",
+    "os_version": "Windows x64 10.0.26100",
+    "vscode_version": "1.102.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 256251,
+    "created_at": "2025-07-16T13:55:14Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/256251",
+    "title": "Ubuntu WSL terminal profile does not work",
+    "symptom_summary": "The built-in Ubuntu WSL profile fails for the reporter, who temporarily uses a custom wsl.exe profile with an explicit distribution argument.",
+    "os_version": "Windows",
+    "vscode_version": null,
+    "shell": "Ubuntu (WSL)",
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 270158,
+    "created_at": "2025-10-07T09:12:14Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/270158",
+    "title": "Screen reader mode drops committed Chinese input",
+    "symptom_summary": "With screen reader optimization enabled, Sogou Pinyin displays suggestions but the selected text never enters the terminal prompt.",
+    "os_version": "Windows 10 Pro 22H2 build 19045.5737",
+    "vscode_version": "1.104.3",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Activate Sogou Pinyin and turn on screen reader optimization in VS Code.",
+      "Type a Chinese word in the integrated terminal and confirm a suggestion."
+    ]
+  },
+  {
+    "issue_number": 271407,
+    "created_at": "2025-10-14T22:12:19Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/271407",
+    "title": "Old command output obscures new terminal output",
+    "symptom_summary": "After using VS Code for a while, running a command can display lines from unrelated command history over the new output. Scrolling up reveals the new output.",
+    "os_version": "Darwin arm64 25.0.0",
+    "vscode_version": "1.105.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 273017,
+    "created_at": "2025-10-24T01:00:50Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/273017",
+    "title": "New PowerShell terminal hangs during Python environment activation",
+    "symptom_summary": "A newly opened terminal waits until Enter is pressed, and commands sent while it is waiting can be joined into one invalid command.",
+    "os_version": "macOS",
+    "vscode_version": null,
+    "shell": "PowerShell",
+    "error_message": null,
+    "repro_steps": [
+      "Open a new terminal.",
+      "Observe whether it stays blocked until Enter is pressed."
+    ]
+  },
+  {
+    "issue_number": 273123,
+    "created_at": "2025-10-24T14:07:13Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/273123",
+    "title": "Running a C program freezes the terminal temporarily",
+    "symptom_summary": "When the reporter runs a C program, the terminal freezes and the program runs about 20 to 30 seconds later.",
+    "os_version": "Windows x64 10.0.26200",
+    "vscode_version": "1.105.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Run a C program and observe the terminal delay."
+    ]
+  },
+  {
+    "issue_number": 285493,
+    "created_at": "2025-12-31T09:51:17Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/285493",
+    "title": "Integrated terminal shows a blank screen",
+    "symptom_summary": "The report describes a blank terminal without specifying whether typed characters appear or whether commands run.",
+    "os_version": "Windows x64 6.2.9200",
+    "vscode_version": "1.79.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 287213,
+    "created_at": "2026-01-13T05:06:01Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/287213",
+    "title": "Blank terminal prevents a program from running",
+    "symptom_summary": "The terminal stays blank and the reporter cannot run a program despite having installed the compiler and added it to PATH.",
+    "os_version": "Windows x64 6.0.6000",
+    "vscode_version": "1.108.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
   },
   {
     "issue_number": 288707,
@@ -21,19 +343,67 @@
     "vscode_version": "1.108.1",
     "shell": null,
     "error_message": null,
-    "repro_steps": ["Open the integrated terminal on a fresh VS Code installation.", "Try to type a command such as dir."]
+    "repro_steps": [
+      "Open the integrated terminal on a fresh VS Code installation.",
+      "Try to type a command such as dir."
+    ]
+  },
+  {
+    "issue_number": 288972,
+    "created_at": "2026-01-19T20:02:41Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/288972",
+    "title": "Shell integration breaks dead keys in zsh",
+    "symptom_summary": "With shell integration enabled and a US International keyboard layout, dead key combinations in the integrated terminal produce digits after a regular character is typed.",
+    "os_version": "macOS Sequoia 15.1.1",
+    "vscode_version": "1.109.0-insider",
+    "shell": "zsh",
+    "error_message": null,
+    "repro_steps": [
+      "Enable shell integration and use the US International keyboard layout.",
+      "Open a zsh terminal, type a regular character, then try an accent composition."
+    ]
+  },
+  {
+    "issue_number": 290244,
+    "created_at": "2026-01-25T09:28:50Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/290244",
+    "title": "Terminal launch has a transport timing problem",
+    "symptom_summary": "The report mentions a transport timing issue on terminal launch and gives no further symptom details.",
+    "os_version": "Windows x64 6.0.6000",
+    "vscode_version": "1.108.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
   },
   {
     "issue_number": 293305,
     "created_at": "2026-02-06T06:25:55Z",
     "source_url": "https://github.com/microsoft/vscode/issues/293305",
     "title": "Integrated terminal fails to launch after updating to 1.109.0",
-    "symptom_summary": "Opening the integrated terminal on Windows 10 LTSB 2016 fails after an update or fresh installation of VS Code 1.109.0.",
+    "symptom_summary": "Opening the integrated terminal on Windows 10 LTSB 2016 fails after an update or fresh installation of VS Code 1.109.0. The reporter says downgrading to 1.108.2 or earlier removes the error.",
     "os_version": "Windows 10 LTSB 2016, build 14393",
     "vscode_version": "1.109.0",
     "shell": null,
     "error_message": "Cannot launch conpty",
-    "repro_steps": ["Install or update to VS Code 1.109.0.", "Open a new integrated terminal."]
+    "repro_steps": [
+      "Install or update to VS Code 1.109.0.",
+      "Open a new integrated terminal."
+    ]
+  },
+  {
+    "issue_number": 303020,
+    "created_at": "2026-03-18T23:26:06Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/303020",
+    "title": "PowerShell shell integration fails when VS Code runs as administrator",
+    "symptom_summary": "Starting an integrated PowerShell terminal in an administrator session produces a profile error and opens an unexpected VS Code window.",
+    "os_version": "Windows 10",
+    "vscode_version": null,
+    "shell": "PowerShell",
+    "error_message": "BadExpression",
+    "repro_steps": [
+      "Run VS Code as administrator.",
+      "Open an integrated PowerShell terminal."
+    ]
   },
   {
     "issue_number": 303202,
@@ -45,6 +415,9 @@
     "vscode_version": "1.112.0",
     "shell": null,
     "error_message": null,
-    "repro_steps": ["Restart VS Code to complete the update.", "Observe input in the integrated terminal."]
+    "repro_steps": [
+      "Restart VS Code to complete the update.",
+      "Observe input in the integrated terminal."
+    ]
   }
 ]

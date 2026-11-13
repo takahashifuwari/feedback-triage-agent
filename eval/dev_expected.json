@@ -5,7 +5,10 @@
     "reference_duplicate_issue_number": 288707,
     "evidence_url": "https://github.com/microsoft/vscode/issues/293585#issuecomment-3873231187",
     "rationale": "The later duplicate link confirms a useful retrieval target. At intake, a blank terminal after a command does not establish that keystrokes were invisible, and the reported VS Code versions differ.",
-    "follow_up_questions": ["Do characters appear while typing, with the terminal going blank only after running the command?"]
+    "follow_up_questions": [
+      "Are characters visible as you type in the terminal?",
+      "What output or error, if any, appears after you press Enter?"
+    ]
   },
   {
     "issue_number": 293412,
@@ -13,7 +16,9 @@
     "reference_duplicate_issue_number": 293305,
     "evidence_url": "https://github.com/microsoft/vscode/issues/293412#issuecomment-3861737472",
     "rationale": "The platform build and VS Code version match the historical candidate. The initial text only describes trouble opening the terminal, without confirming the same launch failure.",
-    "follow_up_questions": ["Does the terminal fail to launch, and what exact error message appears?"]
+    "follow_up_questions": [
+      "Does the terminal fail to launch, and what exact error message appears?"
+    ]
   },
   {
     "issue_number": 303822,
@@ -28,7 +33,7 @@
     "expected_action": "create_new",
     "reference_duplicate_issue_number": null,
     "evidence_url": "https://github.com/microsoft/vscode/issues/237688#issuecomment-2659498819",
-    "rationale": "The initial report specifies a split-pane trigger and incorrect text size. The available seed issue describes duplicated lines after resizing the terminal view. The maintainer also withdrew a later duplicate claim and tracked the split-rendering issue separately. The action applies to the frozen seed corpus.",
+    "rationale": "The initial report describes doubled and incorrectly sized text triggered by splitting terminals. Earlier candidates describe other triggers, including duplicated lines when resizing the terminal view (#227137). The closest split-rendering issue (#239917) was created after this feedback and is excluded from its replay. The action applies to the frozen candidate corpus.",
     "follow_up_questions": []
   }
 ]

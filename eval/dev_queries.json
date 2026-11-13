@@ -9,7 +9,10 @@
     "vscode_version": "1.79.2",
     "shell": null,
     "error_message": null,
-    "repro_steps": ["Open a project in VS Code.", "Open a new integrated terminal and try a command such as dir."]
+    "repro_steps": [
+      "Open a project in VS Code.",
+      "Open a new integrated terminal and try a command such as dir."
+    ]
   },
   {
     "issue_number": 293412,
@@ -21,7 +24,9 @@
     "vscode_version": "1.109.0",
     "shell": null,
     "error_message": null,
-    "repro_steps": ["Open the integrated terminal after updating VS Code."]
+    "repro_steps": [
+      "Open the integrated terminal after updating VS Code."
+    ]
   },
   {
     "issue_number": 303822,
@@ -33,18 +38,24 @@
     "vscode_version": "1.112.0",
     "shell": "PowerShell",
     "error_message": null,
-    "repro_steps": ["Update VS Code to 1.112.0.", "Open an integrated PowerShell terminal."]
+    "repro_steps": [
+      "Update VS Code to 1.112.0.",
+      "Open an integrated PowerShell terminal."
+    ]
   },
   {
     "issue_number": 237688,
     "created_at": "2025-01-10T20:34:00Z",
     "source_url": "https://github.com/microsoft/vscode/issues/237688",
     "title": "Text doubles and changes size when integrated terminals are split",
-    "symptom_summary": "With two or more terminals in a split group, one pane shows doubled and incorrectly sized text. Closing the terminals clears the symptom.",
+    "symptom_summary": "With two or more terminals in a split group, one pane shows doubled and incorrectly sized text. The symptom clears only after closing all terminals.",
     "os_version": "Windows x64 10.0.22631",
     "vscode_version": "1.97.0-insider",
     "shell": null,
     "error_message": null,
-    "repro_steps": ["Open two or more integrated terminals.", "Split them into a group."]
+    "repro_steps": [
+      "Open two or more integrated terminals.",
+      "Split them into a group."
+    ]
   }
 ]
