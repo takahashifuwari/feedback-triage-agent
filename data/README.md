@@ -12,7 +12,7 @@
 
 工单正文的摘要取自可核对的报告者描述。GitHub 当前公开页面未必能复原每次历史编辑。本批仅纳入正文中没有观察到事后处理结论的样例，后续遇到正文含事后线索且无法核实初始内容的工单时，应从回放样本中排除。
 
-## 统一字段
+## 历史工单与待处理反馈字段
 
 | 字段 | 类型 | 含义 |
 | --- | --- | --- |
@@ -26,4 +26,19 @@
 
 开发回放按每条反馈的创建时间过滤候选，只有 `candidate.created_at < query.created_at` 的工单可参与检索。TF-IDF 默认只读取候选与反馈的标题和症状摘要，来源链接用于展示。标签、评论、重复指向和处置结果只供评估使用。
 
-`expected_action` 有三个可选值：`link_existing` 表示建议关联，`request_info` 表示先补信息，`create_new` 表示建议新建。`reference_duplicate_issue_number` 记录维护者后来确认的重复目标，用于检索核对。它可以与 `request_info` 同时出现，例如 #293585 的事后重复关系已知，但初始描述仍缺少区分输入和输出问题的信息。独立评估集应避开这里的四组案例及它们已知的重复链。
+## 开发参考答案字段
+
+`eval/dev_expected.json` 中每条反馈对应一条参考答案。每条答案都填写下列六个字段，评估程序按 `issue_number` 对照 `eval/dev_queries.json` 中的反馈。
+
+| 字段 | 类型 | 含义 |
+| --- | --- | --- |
+| `issue_number` | 整数 | 待处理反馈的工单号，与 `dev_queries.json` 对应 |
+| `expected_action` | 字符串 | 建议的下一步。取值为 `link_existing`（建议关联）、`request_info`（先补信息）或 `create_new`（建议新建） |
+| `reference_duplicate_issue_number` | 整数或 `null` | 维护者后来确认、且收录在历史候选库中的重复工单号，用于评估检索结果。没有此类目标时填 `null` |
+| `evidence_url` | 字符串 | 供人工复核的 GitHub 维护者评论链接 |
+| `rationale` | 字符串 | 解释为何给出该建议，可记录事后核对依据 |
+| `follow_up_questions` | 字符串数组 | 建议向报告者追问的问题。无需追问时填空数组 `[]` |
+
+例如，#293585 的 `reference_duplicate_issue_number` 是 288707，因为维护者后来确认了重复关系。凭反馈刚提交时的描述，仍要确认是输入时看不到字符，还是执行命令后没有输出，所以 `expected_action` 是 `request_info`。评估程序在 Agent 给出建议后读取参考答案。
+
+独立评估集应避开这里的四组案例及它们已知的重复链。
