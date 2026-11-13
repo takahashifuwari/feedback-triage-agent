@@ -1,0 +1,50 @@
+[
+  {
+    "issue_number": 227137,
+    "created_at": "2024-08-29T18:45:43Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/227137",
+    "title": "PowerShell terminal duplicates lines when resized",
+    "symptom_summary": "Existing output lines appear twice after expanding and collapsing the integrated terminal view.",
+    "os_version": "Windows x64 10.0.22631",
+    "vscode_version": "1.93.0-insider",
+    "shell": "PowerShell",
+    "error_message": null,
+    "repro_steps": ["Print more lines than the visible area.", "Expand and collapse the terminal view several times."]
+  },
+  {
+    "issue_number": 288707,
+    "created_at": "2026-01-18T10:33:06Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/288707",
+    "title": "Integrated terminal does not display typed characters",
+    "symptom_summary": "The integrated terminal shows a blinking cursor, but typing produces no visible characters. The external Command Prompt accepts input.",
+    "os_version": "Windows x64 6.0.6001",
+    "vscode_version": "1.108.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": ["Open the integrated terminal on a fresh VS Code installation.", "Try to type a command such as dir."]
+  },
+  {
+    "issue_number": 293305,
+    "created_at": "2026-02-06T06:25:55Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/293305",
+    "title": "Integrated terminal fails to launch after updating to 1.109.0",
+    "symptom_summary": "Opening the integrated terminal on Windows 10 LTSB 2016 fails after an update or fresh installation of VS Code 1.109.0.",
+    "os_version": "Windows 10 LTSB 2016, build 14393",
+    "vscode_version": "1.109.0",
+    "shell": null,
+    "error_message": "Cannot launch conpty",
+    "repro_steps": ["Install or update to VS Code 1.109.0.", "Open a new integrated terminal."]
+  },
+  {
+    "issue_number": 303202,
+    "created_at": "2026-03-19T14:15:38Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/303202",
+    "title": "Integrated terminal receives repeated Enter input after update",
+    "symptom_summary": "After restarting VS Code for an update, the integrated terminal behaves as if Enter is being pressed repeatedly, preventing normal use.",
+    "os_version": "Windows x64 10.0.26200",
+    "vscode_version": "1.112.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": ["Restart VS Code to complete the update.", "Observe input in the integrated terminal."]
+  }
+]

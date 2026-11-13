@@ -1,0 +1,50 @@
+[
+  {
+    "issue_number": 293585,
+    "created_at": "2026-02-07T05:39:17Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/293585",
+    "title": "Integrated terminal opens but shows no command output",
+    "symptom_summary": "The integrated terminal opens and remains blank when the reporter tries to run a command. The report does not say whether keystrokes are visible.",
+    "os_version": "Windows x64 6.2.9200",
+    "vscode_version": "1.79.2",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": ["Open a project in VS Code.", "Open a new integrated terminal and try a command such as dir."]
+  },
+  {
+    "issue_number": 293412,
+    "created_at": "2026-02-06T13:31:21Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/293412",
+    "title": "Problem opening the integrated terminal after an update",
+    "symptom_summary": "The reporter noticed a problem when opening the integrated terminal after installing an update. The exact behavior and error are not specified in the text.",
+    "os_version": "Windows x64 10.0.14393",
+    "vscode_version": "1.109.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": ["Open the integrated terminal after updating VS Code."]
+  },
+  {
+    "issue_number": 303822,
+    "created_at": "2026-03-22T07:41:01Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/303822",
+    "title": "PowerShell integrated terminal repeatedly creates new lines",
+    "symptom_summary": "After updating to VS Code 1.112.0, the integrated PowerShell terminal continuously creates new lines. The reporter cannot type or stop it with Ctrl+C.",
+    "os_version": "Windows x64 10.0.26200",
+    "vscode_version": "1.112.0",
+    "shell": "PowerShell",
+    "error_message": null,
+    "repro_steps": ["Update VS Code to 1.112.0.", "Open an integrated PowerShell terminal."]
+  },
+  {
+    "issue_number": 237688,
+    "created_at": "2025-01-10T20:34:00Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/237688",
+    "title": "Text doubles and changes size when integrated terminals are split",
+    "symptom_summary": "With two or more terminals in a split group, one pane shows doubled and incorrectly sized text. Closing the terminals clears the symptom.",
+    "os_version": "Windows x64 10.0.22631",
+    "vscode_version": "1.97.0-insider",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": ["Open two or more integrated terminals.", "Split them into a group."]
+  }
+]

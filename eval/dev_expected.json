@@ -1,0 +1,34 @@
+[
+  {
+    "issue_number": 293585,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": 288707,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/293585#issuecomment-3873231187",
+    "rationale": "The later duplicate link confirms a useful retrieval target. At intake, a blank terminal after a command does not establish that keystrokes were invisible, and the reported VS Code versions differ.",
+    "follow_up_questions": ["Do characters appear while typing, with the terminal going blank only after running the command?"]
+  },
+  {
+    "issue_number": 293412,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": 293305,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/293412#issuecomment-3861737472",
+    "rationale": "The platform build and VS Code version match the historical candidate. The initial text only describes trouble opening the terminal, without confirming the same launch failure.",
+    "follow_up_questions": ["Does the terminal fail to launch, and what exact error message appears?"]
+  },
+  {
+    "issue_number": 303822,
+    "expected_action": "link_existing",
+    "reference_duplicate_issue_number": 303202,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/303822#issuecomment-4113827517",
+    "rationale": "Both reports describe repeated new lines or Enter input immediately after updating to VS Code 1.112.0 on Windows build 26200. The historical report does not specify the shell. The observed symptom and environment support suggesting a link for human review.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 237688,
+    "expected_action": "create_new",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/237688#issuecomment-2659498819",
+    "rationale": "The initial report specifies a split-pane trigger and incorrect text size. The available seed issue describes duplicated lines after resizing the terminal view. The maintainer also withdrew a later duplicate claim and tracked the split-rendering issue separately. The action applies to the frozen seed corpus.",
+    "follow_up_questions": []
+  }
+]
