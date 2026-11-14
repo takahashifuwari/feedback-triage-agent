@@ -22,6 +22,14 @@
 
 先用 Python 按时间过滤历史工单，再通过 TF-IDF 关键词检索返回前三条候选。模型核对症状、环境与缺失信息，程序验证引用确实来自候选结果。Streamlit 页面提供建议和证据，离线模式使用实际检索与规则基线。
 
+## 第 1 天进度
+
+确定项目服务于 SaaS 客服和产品运营，明确「建议关联、先补信息、建议新建」三种处理建议，并用 #293585 和 #288707 定义主案例与验收口径。[查看 Day 1 PR](https://github.com/takahashifuwari/feedback-triage-agent/pull/1)
+
+## 第 2 天进度
+
+整理首批 4 条历史工单、4 条练习反馈和 4 条参考答案。练习反馈与参考答案分开保存，便于用反馈提交时可见的信息回放。字段含义和时间口径见[工单数据说明](data/README.md)。[查看 Day 2 PR](https://github.com/takahashifuwari/feedback-triage-agent/pull/2)
+
 ## 第 3 天进度
 
 候选库有 30 条公开工单。可用 Python 3.9 或更高版本在仓库根目录运行时间过滤。
