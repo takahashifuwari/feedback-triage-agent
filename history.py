@@ -22,8 +22,8 @@ def filter_history(candidates, feedback_created_at):
     return [row for row in candidates if _parse_created_at(row["created_at"]) < cutoff]
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
+def load_replay(description):
+    parser = argparse.ArgumentParser(description=description)
     parser.add_argument("issue_number", type=int, help="issue number from dev_queries.json")
     issue_number = parser.parse_args().issue_number
 
@@ -33,6 +33,12 @@ def main() -> None:
         parser.error(f"no development feedback found for #{issue_number}")
 
     candidates = json.loads((ROOT / "data" / "seed_issues.json").read_text(encoding="utf-8"))
+    return query, candidates
+
+
+def main() -> None:
+    query, candidates = load_replay(__doc__)
+    issue_number = query["issue_number"]
     cutoff = query["created_at"]
     visible = filter_history(candidates, cutoff)
     print(f"#{issue_number} ({cutoff}): {len(visible)}/{len(candidates)} eligible")
