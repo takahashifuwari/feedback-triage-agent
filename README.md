@@ -70,12 +70,13 @@ python triage.py 293585
 
 ## 第 6 天模型分流
 
-在本地终端设置 `OPENAI_API_KEY` 环境变量，然后运行。
+在本地终端设置 `GEMINI_API_KEY` 环境变量。Windows PowerShell 可以这样输入密钥并运行主案例。
 
-```bash
+```powershell
+$env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new("", (Read-Host "Gemini API Key" -AsSecureString)).Password
 python triage.py 293585 --online
 ```
 
-在线模式调用 OpenAI Responses API，默认模型是 `gpt-5.6-terra`，可用 `OPENAI_MODEL` 指定支持结构化输出且账号可用的模型。程序先检索，再把反馈与最多三条候选的内容发给模型。模型可从任一候选建议关联，也可说明证据不足，提出一到两个针对当前反馈的问题。原文链接由程序从给定工单读取。
+在线模式调用 Gemini API 的 `generateContent`，默认模型是 `gemini-3.5-flash-lite`，可用 `GEMINI_MODEL` 指定支持结构化输出且账号可用的模型。程序先检索，再把反馈与最多三条候选的内容发给模型。模型可从任一候选建议关联，也可说明证据不足，提出一到两个针对当前反馈的问题。原文链接由程序从给定工单读取。
 
 建议关联时，编号必须属于本次候选。证据只能引用反馈或本次候选。参考答案供后续评估。遇到 API 错误或模型结果未通过校验，在线命令返回错误。去掉 `--online` 可直接运行离线规则。

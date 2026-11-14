@@ -3,6 +3,7 @@
 import json
 import os
 from urllib.error import HTTPError, URLError
+from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
@@ -44,16 +45,11 @@ PROPERTIES = {
     },
     "follow_up_questions": {"type": "array", "items": {"type": "string"}},
 }
-FORMAT = {
-    "type": "json_schema",
-    "name": "triage",
-    "strict": True,
-    "schema": {
-        "type": "object",
-        "properties": PROPERTIES,
-        "required": list(PROPERTIES),
-        "additionalProperties": False,
-    },
+SCHEMA = {
+    "type": "object",
+    "properties": PROPERTIES,
+    "required": list(PROPERTIES),
+    "additionalProperties": False,
 }
 
 
@@ -62,42 +58,48 @@ def ticket_facts(ticket):
 
 
 def review(feedback, matches):
-    key = os.getenv("OPENAI_API_KEY")
+    key = os.getenv("GEMINI_API_KEY")
     if not key:
-        raise RuntimeError("set OPENAI_API_KEY to run with --online")
+        raise RuntimeError("set GEMINI_API_KEY to run with --online")
 
-    model = os.getenv("OPENAI_MODEL") or "gpt-5.6-terra"
+    model = os.getenv("GEMINI_MODEL") or "gemini-3.5-flash-lite"
     context = {
         "feedback": ticket_facts(feedback),
         "candidates": [dict(ticket_facts(ticket), score=score) for ticket, score in matches],
     }
     payload = {
-        "model": model,
-        "instructions": INSTRUCTIONS,
-        "input": json.dumps(context, ensure_ascii=False),
-        "text": {"format": FORMAT},
-        "max_output_tokens": 2000,
-        "store": False,
+        "systemInstruction": {"parts": [{"text": INSTRUCTIONS}]},
+        "contents": [{"role": "user", "parts": [{"text": json.dumps(context, ensure_ascii=False)}]}],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "responseJsonSchema": SCHEMA,
+            "maxOutputTokens": 2000,
+        },
     }
     request = Request(
-        "https://api.openai.com/v1/responses",
+        f"https://generativelanguage.googleapis.com/v1beta/models/{quote(model, safe='')}:generateContent",
         data=json.dumps(payload).encode("utf-8"),
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        headers={"x-goog-api-key": key, "Content-Type": "application/json"},
     )
     try:
         with urlopen(request, timeout=45) as response:
             data = json.load(response)
     except HTTPError as error:
-        raise RuntimeError(f"OpenAI API returned HTTP {error.code}") from error
+        raise RuntimeError(f"Gemini API returned HTTP {error.code}") from error
     except (URLError, TimeoutError) as error:
-        raise RuntimeError("could not reach the OpenAI API") from error
+        raise RuntimeError("could not reach the Gemini API") from error
 
-    if data["status"] != "completed":
-        raise ValueError(f"model response status: {data['status']}")
+    candidates = data.get("candidates") or []
+    if not candidates:
+        reason = data.get("promptFeedback", {}).get("blockReason", "no candidate")
+        raise ValueError(f"Gemini did not return a triage result ({reason})")
+    candidate = candidates[0]
+    reason = candidate.get("finishReason")
+    if reason != "STOP":
+        raise ValueError(f"Gemini response did not complete ({reason or 'unknown reason'})")
     parts = [
-        part["text"]
-        for item in data["output"] if item["type"] == "message"
-        for part in item["content"] if part["type"] == "output_text"
+        part["text"] for part in candidate.get("content", {}).get("parts", [])
+        if "text" in part and not part.get("thought")
     ]
     if not parts:
         raise ValueError("model did not return a triage result")
@@ -121,4 +123,4 @@ def review(feedback, matches):
             raise ValueError("request_info must include one or two questions")
     elif questions:
         raise ValueError("only request_info may include questions")
-    return data.get("model", model), result
+    return data.get("modelVersion", model), result

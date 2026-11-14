@@ -57,7 +57,7 @@ def validate_action(action, link, matches):
 
 def main():
     parser = replay_parser(__doc__)
-    parser.add_argument("--online", action="store_true", help="ask the OpenAI model")
+    parser.add_argument("--online", action="store_true", help="ask the Gemini model")
     args = parser.parse_args()
     feedback, candidates = load_replay(parser, args.issue_number)
     matches = retrieve(feedback, candidates)
