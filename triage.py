@@ -42,14 +42,43 @@ def baseline_action(feedback, matches):
     return "request_info", None
 
 
+def validate_action(action, link, matches):
+    """Validate the suggestion and resolve any link against the retrieved tickets."""
+    if action == "link_existing":
+        for ticket, _ in matches:
+            if ticket["issue_number"] == link:
+                return ticket["source_url"]
+        raise ValueError("linked issue must be among the retrieved candidates")
+    if action not in ("request_info", "create_new") or link is not None:
+        raise ValueError("invalid action or unexpected linked issue")
+    return None
+
+
 def main():
     feedback, candidates = load_replay(__doc__)
     matches = retrieve(feedback, candidates)
+    action, link = baseline_action(feedback, matches)
+    source = validate_action(action, link, matches)
+
+    print("mode: offline (TF-IDF + rules)")
+    print(f"feedback: #{feedback['issue_number']}  {feedback['source_url']}")
+    print(f"reported: {feedback['symptom_summary']}")
     for ticket, score in matches:
         print(f"#{ticket['issue_number']}  {score:.3f}  {ticket['source_url']}")
-    action, link = baseline_action(feedback, matches)
+    if matches:
+        top_ticket, _ = matches[0]
+        print(f"top candidate symptom: {top_ticket['symptom_summary']}")
+        print("VS Code versions (feedback / top candidate): "
+              f"{feedback['vscode_version'] or 'unknown'} / "
+              f"{top_ticket['vscode_version'] or 'unknown'}")
     detail = f" #{link}" if link is not None else ""
     print(f"baseline: {action}{detail}")
+    if source:
+        print(f"linked issue: {source}")
+    if action == "request_info":
+        print("follow-up: Can you see the characters you type in the terminal?")
+        print("follow-up: What output or error appears when opening it or after pressing Enter?")
+    print("validation: passed")
 
 
 if __name__ == "__main__":
