@@ -22,11 +22,13 @@ def filter_history(candidates, feedback_created_at):
     return [row for row in candidates if _parse_created_at(row["created_at"]) < cutoff]
 
 
-def load_replay(description):
+def replay_parser(description):
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("issue_number", type=int, help="issue number from dev_queries.json")
-    issue_number = parser.parse_args().issue_number
+    return parser
 
+
+def load_replay(parser, issue_number):
     queries = json.loads((ROOT / "eval" / "dev_queries.json").read_text(encoding="utf-8"))
     query = next((row for row in queries if row["issue_number"] == issue_number), None)
     if query is None:
@@ -37,7 +39,8 @@ def load_replay(description):
 
 
 def main() -> None:
-    query, candidates = load_replay(__doc__)
+    parser = replay_parser(__doc__)
+    query, candidates = load_replay(parser, parser.parse_args().issue_number)
     issue_number = query["issue_number"]
     cutoff = query["created_at"]
     visible = filter_history(candidates, cutoff)
