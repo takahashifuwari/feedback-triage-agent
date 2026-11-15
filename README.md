@@ -80,3 +80,16 @@ python triage.py 293585 --online
 在线模式调用 Gemini API 的 `generateContent`，默认模型是 `gemini-3.5-flash-lite`，可用 `GEMINI_MODEL` 指定支持结构化输出且账号可用的模型。程序先检索，再把反馈与最多三条候选的内容发给模型。模型可从任一候选建议关联，也可说明证据不足，提出一到两个针对当前反馈的问题。原文链接由程序从给定工单读取。
 
 建议关联时，编号必须属于本次候选。证据只能引用反馈或本次候选。参考答案供后续评估。遇到 API 错误或模型结果未通过校验，在线命令返回错误。去掉 `--online` 可直接运行离线规则。
+
+## 第 7 天网页演示
+
+在仓库根目录安装依赖并启动单页。终端会显示本地页面地址。
+
+```bash
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+在 **Feedback** 选择 **Example** 回放工单，默认是 #293585。也可选择 **New feedback** 输入英文标题和症状，按需填写 VS Code 版本和复现步骤。点击 **Run triage** 后，右侧显示建议、追问和相似工单原文链接。
+
+默认使用 **Offline rules**。要用 **Gemini**，先在启动页面的同一个终端按第 6 天的方法设置 `GEMINI_API_KEY`，在页面选择 **Gemini** 再提交。该模式会发送本条反馈和最多三条历史候选，并展示模型引用的依据。网页和命令行共用分流代码。

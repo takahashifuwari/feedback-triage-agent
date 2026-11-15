@@ -9,6 +9,10 @@ from model_review import review
 
 LINK_SCORE = 0.45
 REVIEW_SCORE = 0.25
+OFFLINE_QUESTIONS = (
+    "Can you see the characters you type in the terminal?",
+    "What output or error appears when opening it or after pressing Enter?",
+)
 
 
 def ticket_text(ticket):
@@ -55,22 +59,42 @@ def validate_action(action, link, matches):
     return None
 
 
+def triage_feedback(feedback, candidates, online=False):
+    """Run the same retrieval and decision pipeline for the CLI and the page."""
+    matches = retrieve(feedback, candidates)
+    if online:
+        model, decision = review(feedback, matches)
+        action, number = decision["action"], decision["linked_issue_number"]
+        evidence = decision["evidence"]
+        questions = decision["follow_up_questions"]
+    else:
+        model = None
+        action, number = baseline_action(feedback, matches)
+        evidence = []
+        questions = OFFLINE_QUESTIONS if action == "request_info" else ()
+    return {
+        "matches": matches,
+        "model": model,
+        "action": action,
+        "linked_issue_number": number,
+        "link": validate_action(action, number, matches),
+        "evidence": evidence,
+        "questions": questions,
+    }
+
+
 def main():
     parser = replay_parser(__doc__)
     parser.add_argument("--online", action="store_true", help="ask the Gemini model")
     args = parser.parse_args()
     feedback, candidates = load_replay(parser, args.issue_number)
-    matches = retrieve(feedback, candidates)
     try:
-        if args.online:
-            model, result = review(feedback, matches)
-            action, link = result["action"], result["linked_issue_number"]
-        else:
-            action, link = baseline_action(feedback, matches)
-        source = validate_action(action, link, matches)
+        result = triage_feedback(feedback, candidates, args.online)
     except (RuntimeError, ValueError) as error:
         parser.exit(1, f"error: {error}\n")
 
+    matches, model = result["matches"], result["model"]
+    action, link, source = result["action"], result["linked_issue_number"], result["link"]
     print(f"mode: online ({model})" if args.online else "mode: offline (TF-IDF + rules)")
     print(f"feedback: #{feedback['issue_number']}  {feedback['source_url']}")
     print(f"reported: {feedback['symptom_summary']}")
@@ -87,14 +111,10 @@ def main():
     print(f"{label}: {action}{detail}")
     if source:
         print(f"linked issue: {source}")
-    if args.online:
-        for number, observation, url in result["evidence"]:
-            print(f"evidence: #{number}  {observation}  {url}")
-        for question in result["follow_up_questions"]:
-            print(f"follow-up: {question}")
-    elif action == "request_info":
-        print("follow-up: Can you see the characters you type in the terminal?")
-        print("follow-up: What output or error appears when opening it or after pressing Enter?")
+    for number, observation, url in result["evidence"]:
+        print(f"evidence: #{number}  {observation}  {url}")
+    for question in result["questions"]:
+        print(f"follow-up: {question}")
     print("validation: passed")
 
 
