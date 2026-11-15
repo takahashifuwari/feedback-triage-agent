@@ -1,0 +1,177 @@
+[
+  {
+    "issue_number": 239877,
+    "created_at": "2025-02-07T02:40:11Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/239877",
+    "title": "Right-click pastes twice in the macOS terminal",
+    "symptom_summary": "A single right-click inserts two copies of the selected text. The behavior appeared in 1.97.0 and stopped after reverting to 1.96.4.",
+    "os_version": "macOS 15.3 (arm64)",
+    "vscode_version": "1.97.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Set terminal.integrated.rightClickBehavior to paste.",
+      "In the integrated terminal, select text and right-click to paste."
+    ]
+  },
+  {
+    "issue_number": 247568,
+    "created_at": "2025-04-28T09:24:58Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/247568",
+    "title": "Terminal file links misread colons inside timestamped filenames",
+    "symptom_summary": "Ctrl-clicking a timestamped relative path prints a no-results message. The terminal link removes leading zeroes from parts of the filename.",
+    "os_version": "Arch Linux",
+    "vscode_version": "1.99.3",
+    "shell": null,
+    "error_message": "no matching results",
+    "repro_steps": [
+      "Create a log file whose timestamped name contains multiple colons.",
+      "Print the filename with a ./ prefix in the terminal.",
+      "Ctrl-click the printed path."
+    ]
+  },
+  {
+    "issue_number": 248468,
+    "created_at": "2025-05-09T02:23:20Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/248468",
+    "title": "Terminal URL values contain escaped colons",
+    "symptom_summary": "On Linux after the 1.100.0 update, URLs in terminal environment variables contain literal backslash-x3a sequences. Applications reject the resulting URLs.",
+    "os_version": "Linux",
+    "vscode_version": "1.100.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Set an environment variable containing an HTTP URL in VS Code configuration.",
+      "Open the integrated terminal and inspect the variable with env."
+    ]
+  },
+  {
+    "issue_number": 251403,
+    "created_at": "2025-06-13T16:10:57Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/251403",
+    "title": "Accepting a terminal completion leaves no separator before a flag",
+    "symptom_summary": "Choosing the ls suggestion with Tab and immediately typing a flag concatenates the command and flag into ls-a.",
+    "os_version": "macOS (Darwin arm64 24.5.0)",
+    "vscode_version": "1.102.0-insider",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Start a terminal with shell integration and terminal suggestions enabled.",
+      "Type ls and accept the first suggestion using Tab.",
+      "Type -a without entering a space."
+    ]
+  },
+  {
+    "issue_number": 257058,
+    "created_at": "2025-07-21T10:52:30Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/257058",
+    "title": "Moving a terminal to a new window and back breaks Ctrl+Tab",
+    "symptom_summary": "Ctrl+Tab stops cycling between files after a split pane is moved out and returned to the panel. Opening a file restores the shortcut.",
+    "os_version": "Ubuntu 24.04.2 LTS",
+    "vscode_version": "1.102.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Split the integrated terminal into two panes.",
+      "Move the second terminal to a separate window, then return it to the panel.",
+      "Press Ctrl+Tab in the editor or terminal."
+    ]
+  },
+  {
+    "issue_number": 262330,
+    "created_at": "2025-08-19T14:19:12Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/262330",
+    "title": "Git Bash does not work when selected as the integrated terminal",
+    "symptom_summary": "The reporter selects Git Bash and reports that it does not work. The text provides no exact error or launch behavior.",
+    "os_version": "Windows 11",
+    "vscode_version": null,
+    "shell": "Git Bash",
+    "error_message": null,
+    "repro_steps": [
+      "Select Git Bash from the terminal options."
+    ]
+  },
+  {
+    "issue_number": 262861,
+    "created_at": "2025-08-22T08:27:17Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/262861",
+    "title": "New Windows terminals retain old environment variables",
+    "symptom_summary": "After editing system or user environment variables, starting a terminal or reloading the window still uses old values. The report describes the same behavior with several shells.",
+    "os_version": "Windows 11 (build 26100)",
+    "vscode_version": "1.104.0-insider",
+    "shell": "PowerShell, Command Prompt, and Git Bash",
+    "error_message": null,
+    "repro_steps": [
+      "Change a Windows user or system environment variable while VS Code is open.",
+      "Open a new terminal or reload the VS Code window, then inspect the value."
+    ]
+  },
+  {
+    "issue_number": 275714,
+    "created_at": "2025-11-06T00:17:05Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/275714",
+    "title": "Terminal commands fail around UNC paths",
+    "symptom_summary": "The reporter describes trouble running code and sudden problems with UNC paths in the integrated terminal. The text omits a command, launch context and error.",
+    "os_version": "Windows 11 (build 26100)",
+    "vscode_version": "1.105.1",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 281851,
+    "created_at": "2025-12-08T04:39:35Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/281851",
+    "title": "tmux drag selection fails in a detached terminal window",
+    "symptom_summary": "Dragging with the left mouse button selects normally in tmux in the main VS Code window. In a separate terminal window, selection fails and wheel scrolling still works.",
+    "os_version": "Windows 11 with remote Ubuntu 22.04",
+    "vscode_version": "1.106.3",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Connect to remote Linux and run tmux with mouse handling on.",
+      "Verify drag selection in the main VS Code window.",
+      "Move the terminal to a new window and drag across text."
+    ]
+  },
+  {
+    "issue_number": 297309,
+    "created_at": "2026-02-24T10:49:36Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/297309",
+    "title": "Terminal search stalls on the first characters with large scrollback",
+    "symptom_summary": "After accumulating a large terminal buffer, typing the first few query characters into Ctrl+F makes the terminal and search box stall. Longer, more specific queries respond faster.",
+    "os_version": "macOS (Darwin arm64 25.3.0)",
+    "vscode_version": "1.109.5",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": [
+      "Increase integrated terminal scrollback to around 100,000 lines.",
+      "Fill the buffer with varied output.",
+      "Open terminal find and type a short query or delete characters."
+    ]
+  },
+  {
+    "issue_number": 305894,
+    "created_at": "2026-03-28T02:23:58Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/305894",
+    "title": "Integrated terminal becomes very slow after an update",
+    "symptom_summary": "The reporter notices a marked terminal slowdown after updating. The report does not identify the operation that is slow or how long it takes.",
+    "os_version": "Windows (build 26200)",
+    "vscode_version": "1.113.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  },
+  {
+    "issue_number": 305957,
+    "created_at": "2026-03-28T12:49:59Z",
+    "source_url": "https://github.com/microsoft/vscode/issues/305957",
+    "title": "Running a script immediately crashes the integrated terminal",
+    "symptom_summary": "The terminal crashes once a script starts. The report does not identify the script, shell, or error.",
+    "os_version": "Windows (build 26200)",
+    "vscode_version": "1.113.0",
+    "shell": null,
+    "error_message": null,
+    "repro_steps": []
+  }
+]
