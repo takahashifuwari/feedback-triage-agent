@@ -67,3 +67,16 @@ python triage.py 293585
 输出包含离线模式、反馈和最多三条候选、首位候选的症状和版本、分流建议及校验结果。主案例的首位候选仍是 #288707，基线建议先补信息，追问键入时是否显示字符以及打开终端或执行命令后有什么输出或报错。
 
 程序只接受三种建议类别。建议关联时，工单编号必须在此次检索结果里，原文链接从该候选记录读取。先补信息和建议新建时，关联编号必须为空。`validation: passed` 表示建议的类别和引用符合这些约束。练习的参考答案用于评估。
+
+## 第 6 天模型分流
+
+在本地终端设置 `GEMINI_API_KEY` 环境变量。Windows PowerShell 可以这样输入密钥并运行主案例。
+
+```powershell
+$env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new("", (Read-Host "Gemini API Key" -AsSecureString)).Password
+python triage.py 293585 --online
+```
+
+在线模式调用 Gemini API 的 `generateContent`，默认模型是 `gemini-3.5-flash-lite`，可用 `GEMINI_MODEL` 指定支持结构化输出且账号可用的模型。程序先检索，再把反馈与最多三条候选的内容发给模型。模型可从任一候选建议关联，也可说明证据不足，提出一到两个针对当前反馈的问题。原文链接由程序从给定工单读取。
+
+建议关联时，编号必须属于本次候选。证据只能引用反馈或本次候选。参考答案供后续评估。遇到 API 错误或模型结果未通过校验，在线命令返回错误。去掉 `--online` 可直接运行离线规则。
