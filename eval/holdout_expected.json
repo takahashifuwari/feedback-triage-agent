@@ -1,0 +1,110 @@
+[
+  {
+    "issue_number": 239877,
+    "expected_action": "create_new",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/239877#issuecomment-2657367834",
+    "rationale": "The report isolates a right-click paste regression on macOS across two versions. Earlier repeated-output tickets in the frozen history concern resizing or rendering, with a different trigger. The maintainer closed this report with a fix commit.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 247568,
+    "expected_action": "create_new",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/247568#issuecomment-3523423700",
+    "rationale": "The report identifies multiple colons inside the filename and a concrete Ctrl-click failure. The maintainer reproduced the path parsing issue and tracked it separately. The frozen earlier history has no candidate showing the same filename parsing behavior.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 248468,
+    "expected_action": "create_new",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/248468#issuecomment-2878036658",
+    "rationale": "The report gives a reproducible change to the contents of a URL variable. Earlier issue #47816 describes stale Windows variables and has a different symptom and platform. A maintainer closed this report for verification.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 251403,
+    "expected_action": "link_existing",
+    "reference_duplicate_issue_number": 241827,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/251403#issuecomment-3448294485",
+    "rationale": "Both reports identify the missing space when accepting a terminal command suggestion. The newer report shows how the missing separator corrupts a following flag. A maintainer recorded the duplicate link.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 257058,
+    "expected_action": "create_new",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/257058#issuecomment-3098187353",
+    "rationale": "The original steps isolate a shortcut failure after moving a terminal out of and back into the panel. Earlier issue #202410 involves mouse tracking inside the detached window. A maintainer reproduced the Ctrl+Tab behavior.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 262330,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/262330#issuecomment-3211406518",
+    "rationale": "Selecting Git Bash is identified, but its failure has no text description or error. A maintainer asked for terminal configuration and a trace.",
+    "follow_up_questions": [
+      "What exactly appears when Git Bash is selected, including any startup error or frozen prompt?",
+      "Can you share the Git Bash profile settings or a terminal trace from launch?"
+    ]
+  },
+  {
+    "issue_number": 262861,
+    "expected_action": "link_existing",
+    "reference_duplicate_issue_number": 47816,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/262861#issuecomment-3228825100",
+    "rationale": "Both reports describe new integrated terminals inheriting stale Windows environment values while VS Code remains open. A maintainer linked the new report to the same tracking issue.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 275714,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/275714#issuecomment-3498985653",
+    "rationale": "The initial report leaves the failing command, error and working-directory condition unclear. A maintainer requested actionable terminal details.",
+    "follow_up_questions": [
+      "Which command fails, and what exact error does it return?",
+      "Does the same command work in a local folder when run in the same shell?"
+    ]
+  },
+  {
+    "issue_number": 281851,
+    "expected_action": "link_existing",
+    "reference_duplicate_issue_number": 202410,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/281851#issuecomment-6066770394",
+    "rationale": "Both reports isolate missing mouse-drag events to a terminal moved into an auxiliary window while other mouse events are still received. The project marked the reports as duplicates.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 297309,
+    "expected_action": "link_existing",
+    "reference_duplicate_issue_number": 242713,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/297309#issuecomment-6148941563",
+    "rationale": "Both reports describe a large scrollback followed by noticeable delays while typing or deleting a terminal search query. The maintainer's duplicate comment points to the same search problem.",
+    "follow_up_questions": []
+  },
+  {
+    "issue_number": 305894,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/305894#issuecomment-4156175310",
+    "rationale": "The report gives a version and a slowdown, with no reproducible operation or timing. The maintainer requested actionable performance details.",
+    "follow_up_questions": [
+      "Which operation is slow: opening the terminal, typing, or running a command?",
+      "What steps reproduce it, and roughly how long does the slowdown last?"
+    ]
+  },
+  {
+    "issue_number": 305957,
+    "expected_action": "request_info",
+    "reference_duplicate_issue_number": null,
+    "evidence_url": "https://github.com/microsoft/vscode/issues/305957#issuecomment-4156370293",
+    "rationale": "The script-triggered crash has no command, error, or trace in the submitted text. A maintainer requested settings and a trace.",
+    "follow_up_questions": [
+      "What command or minimal script causes the crash?",
+      "Can you provide the exact error or a terminal trace from the crash?"
+    ]
+  }
+]
