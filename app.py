@@ -32,6 +32,41 @@ def custom_feedback(title, summary, version, steps):
     }
 
 
+def handoff_summary(feedback, result):
+    lines = [f"Feedback: {feedback['title']}", f"Reported: {feedback['symptom_summary']}"]
+    if feedback["source_url"]:
+        lines.append(f"Original feedback: {feedback['source_url']}")
+    if feedback["vscode_version"]:
+        lines.append(f"VS Code version: {feedback['vscode_version']}")
+    lines.extend(f"Repro step: {step}" for step in feedback["repro_steps"])
+    lines.append(f"Suggested action: {ACTIONS[result['action']]}")
+    if result["link"]:
+        lines.append(f"Linked issue: {result['link']}")
+    lines.extend(f"Follow-up: {question}" for question in result["questions"])
+    lines.extend(
+        f"Evidence ({url or 'submitted feedback'}): {observation}"
+        for _, observation, url in result["evidence"]
+    )
+    lines.extend(
+        f"Candidate #{ticket['issue_number']}: {ticket['source_url']}"
+        for ticket, _ in result["matches"]
+    )
+    if not result["matches"]:
+        lines.append("Candidates: no matching earlier issues in the current library.")
+    return "\n".join(lines)
+
+
+def run_triage(selection, feedback, mode):
+    candidates = json.loads((ROOT / "data/seed_issues.json").read_text(encoding="utf-8"))
+    try:
+        result = triage_feedback(feedback, candidates, online=mode == "Gemini")
+    except (RuntimeError, ValueError) as error:
+        st.session_state.triage_result = selection, feedback, mode, None, str(error)
+    else:
+        st.session_state.triage_result = selection, feedback, mode, result, None
+    st.session_state.pop("handoff_draft", None)
+
+
 def show_result(feedback, result, mode):
     with st.container(border=True):
         st.caption(f"MODE  ·  {result['model'] or mode}")
@@ -54,13 +89,21 @@ def show_result(feedback, result, mode):
 
     st.subheader("Similar issues")
     if not result["matches"]:
-        st.caption("No earlier issues with matching terms were found.")
+        st.info("No matching earlier issues were found in the current library.")
     for ticket, score in result["matches"]:
         with st.container(border=True):
             st.markdown(f"[#{ticket['issue_number']}]({ticket['source_url']}) · `{score:.3f}`")
             st.text(ticket["title"])
             st.text(ticket["symptom_summary"])
             st.caption(f"VS Code {ticket['vscode_version'] or 'version unknown'}")
+
+    st.text_area(
+        "Handoff summary",
+        value=handoff_summary(feedback, result),
+        key="handoff_draft",
+        height=200,
+        help="Review and edit the draft, then select and copy the text.",
+    )
 
 
 def main():
@@ -116,17 +159,22 @@ def main():
             if not feedback["title"] or not feedback["symptom_summary"]:
                 st.error("Enter a title and describe what happened.")
             else:
-                candidates = json.loads((ROOT / "data/seed_issues.json").read_text(encoding="utf-8"))
-                try:
-                    with st.spinner("Reviewing feedback…"):
-                        result = triage_feedback(feedback, candidates, online=mode == "Gemini")
-                except (RuntimeError, ValueError) as error:
-                    st.error(str(error))
-                else:
-                    st.session_state.triage_result = selection, feedback, result, mode
+                with st.spinner("Reviewing feedback…"):
+                    run_triage(selection, feedback, mode)
         previous = st.session_state.get("triage_result")
         if previous and previous[0] == selection:
-            show_result(*previous[1:])
+            _, reviewed_feedback, reviewed_mode, result, error = previous
+            if error is None:
+                show_result(reviewed_feedback, result, reviewed_mode)
+            elif reviewed_mode == "Gemini":
+                st.error(f"Gemini review failed. {error}")
+                st.button(
+                    "Run offline rules",
+                    on_click=run_triage,
+                    args=(selection, reviewed_feedback, MODES[0]),
+                )
+            else:
+                st.error(error)
         elif not submitted:
             with st.container(border=True):
                 st.write("Run triage to see a suggested action and the similar issues behind it.")
