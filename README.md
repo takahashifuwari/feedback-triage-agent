@@ -70,6 +70,10 @@ python -m unittest discover -s tests -v
 
 前两条命令生成逐例 JSON，在线命令使用同一终端的 `GEMINI_API_KEY`。最后一条运行自动测试。评估脚本先完成全部预测，再读取参考答案。工单字段、样例来源和参考答案见[数据说明](data/README.md)。
 
+## 发布前自动验收
+
+PR 更新和推送 main 后，GitHub Actions 会在 Windows / Linux、Python 3.12 / 3.13 运行测试、主案例和冻结评估。流程使用离线模式，无需 Gemini 密钥，并保存各环境的评估 JSON 与实际依赖版本清单。验收门槛、复跑命令和查看方法见 [Day 14 开发说明](docs/day14-verification.md)。
+
 ## 分流是怎么做的
 
 1. **筛历史**。只查反馈提交前已经存在的工单。
@@ -95,7 +99,7 @@ python -m unittest discover -s tests -v
 ## 开发记录
 
 <details>
-<summary>展开 Day 1–13</summary>
+<summary>展开 Day 1–14</summary>
 
 | 阶段 | 进度 |
 | --- | --- |
@@ -112,5 +116,7 @@ python -m unittest discover -s tests -v
 | Day 11 | 整理快速开始、演示截图、评估复现说明。 |
 | Day 12 | 在全新的 Python 环境完成安装、启动与离线评估，16 项测试通过。 |
 | Day 13 | 准备首版许可证与发布说明。 |
+| Day 14 | 加入跨环境自动验收与冻结评估回归门槛。 |
 
 </details>
+
