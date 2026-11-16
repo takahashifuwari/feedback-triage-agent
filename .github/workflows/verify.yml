@@ -1,0 +1,52 @@
+name: Offline verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.13']
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Check dependencies
+        run: python -m pip check
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Replay the main case
+        run: python triage.py 293585
+      - name: Evaluate frozen holdout
+        run: python evaluate.py --output offline-results.json
+      - name: Record installed versions
+        if: always()
+        run: python -m pip freeze > installed-packages.txt
+      - name: Save verification results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: offline-${{ matrix.os }}-py${{ matrix.python }}
+          path: |
+            offline-results.json
+            installed-packages.txt
+          retention-days: 14
