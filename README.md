@@ -1,116 +1,108 @@
 # 客户反馈分流 Agent
 
-面向 SaaS 客服和产品运营的反馈初筛工具。它从一条新反馈出发，在历史工单中寻找可能相关的记录，并给出可核对的处理建议。
+面向 SaaS 客服和产品运营的反馈初筛工具。输入一条反馈，程序找出最多三条历史工单，并建议关联已有工单、补充关键信息或新建工单。网页提供候选原文、追问和可编辑的交接摘要，供经办人核对。
 
-## 首版范围
+当前演示范围为 VS Code 集成终端，使用公开 GitHub 工单的英文摘要和链接。
 
-使用 VS Code 集成终端的公开 GitHub Issues 作为开发和离线验收数据。经办人输入问题描述，Agent 返回候选工单、匹配和冲突的证据、缺失信息及下一步建议。经办人核对后决定如何处理。
+## 快速开始
 
-| 处理建议 | 判断依据 |
-| --- | --- |
-| 关联已有工单 | 关键症状和条件一致，有可信的历史工单作为依据。 |
-| 补充关键信息 | 现有描述不足以区分不同原因，先追问会改变判断的细节。 |
-| 建议新建工单 | 反馈具备后续跟进所需的信息，检索范围内没有可信匹配。 |
-
-## 演示案例
-
-2026 年 2 月 7 日提交的 [#293585](https://github.com/microsoft/vscode/issues/293585) 描述了 VS Code 集成终端打开后没有输出，尝试运行命令时终端仍为空白。2026 年 1 月 18 日提交的 [#288707](https://github.com/microsoft/vscode/issues/288707) 描述的是按键输入后终端不显示字符。两条工单报告的 VS Code 版本也不同。
-
-演示预期是把 #288707 列为候选，并建议先确认键入时是否显示字符，还是只有执行命令后看不到输出。维护者于 2026 年 2 月 9 日把 #293585 标为 #288707 的重复项。该处理记录只作为离线验收参考。历史回放使用新反馈提交时已知的信息，并从当时已有的工单中检索。
-
-## 实现计划
-
-先用 Python 按时间过滤历史工单，再通过 TF-IDF 关键词检索返回前三条候选。模型核对症状、环境与缺失信息，程序验证引用确实来自候选结果。Streamlit 页面提供建议和证据，离线模式使用实际检索与规则基线。
-
-## 第 1 天进度
-
-确定项目服务于 SaaS 客服和产品运营，明确「建议关联、先补信息、建议新建」三种处理建议，并用 #293585 和 #288707 定义主案例与验收口径。[查看 Day 1 PR](https://github.com/takahashifuwari/feedback-triage-agent/pull/1)
-
-## 第 2 天进度
-
-整理首批 4 条历史工单、4 条练习反馈和 4 条参考答案。练习反馈与参考答案分开保存，便于用反馈提交时可见的信息回放。字段含义和时间口径见[工单数据说明](data/README.md)。[查看 Day 2 PR](https://github.com/takahashifuwari/feedback-triage-agent/pull/2)
-
-## 第 3 天进度
-
-候选库有 30 条公开工单。可用 Python 3.9 或更高版本在仓库根目录运行时间过滤。
-
-```bash
-python history.py 293585
-python -m unittest discover -s tests -v
-```
-
-第一条命令输出符合时间条件的工单编号和来源链接。对于 #293585，30 条候选中有 28 条早于反馈提交时间。
-
-## 第 4 天进度
-
-在仓库根目录安装依赖，运行离线检索和分流基线。
-
-```bash
-python -m pip install -r requirements.txt
-python triage.py 293585
-```
-
-检索先按时间筛选，只用可见工单的标题和症状摘要拟合 TF-IDF，然后用余弦相似度返回最多三条得分大于零的工单。并列时保留候选库原顺序。分数用于衡量文本相似度。
-
-基线用第一条候选做初步判断。相似度达到 0.45 且双方报告了相同的 VS Code 版本时建议关联。其余相似度达到 0.25 的情况先追问。低于 0.25 或没有命中时，反馈有复现步骤则建议新建，否则先追问。阈值是开发样例上的暂定值，建议由人工核对。
-
-主案例 #293585 的首位候选是 #288707，基线建议先追问。四条练习中，三条有参考历史工单，其中两条进入前三。#303822 的参考工单 #303202 排第七，基线先追问，参考答案是建议关联。
-
-## 第 5 天离线演示
-
-安装依赖后，用一条命令复跑主案例。运行时无需网络或 API Key。
-
-```bash
-python triage.py 293585
-```
-
-输出包含离线模式、反馈和最多三条候选、首位候选的症状和版本、分流建议及校验结果。主案例的首位候选仍是 #288707，基线建议先补信息，追问键入时是否显示字符以及打开终端或执行命令后有什么输出或报错。
-
-程序只接受三种建议类别。建议关联时，工单编号必须在此次检索结果里，原文链接从该候选记录读取。先补信息和建议新建时，关联编号必须为空。`validation: passed` 表示建议的类别和引用符合这些约束。练习的参考答案用于评估。
-
-## 第 6 天模型分流
-
-在本地终端设置 `GEMINI_API_KEY` 环境变量。Windows PowerShell 可以这样输入密钥并运行主案例。
-
-```powershell
-$env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new("", (Read-Host "Gemini API Key" -AsSecureString)).Password
-python triage.py 293585 --online
-```
-
-在线模式调用 Gemini API 的 `generateContent`，默认模型是 `gemini-3.5-flash-lite`，可用 `GEMINI_MODEL` 指定支持结构化输出且账号可用的模型。程序先检索，再把反馈与最多三条候选的内容发给模型。模型可从任一候选建议关联，也可说明证据不足，提出一到两个针对当前反馈的问题。原文链接由程序从给定工单读取。
-
-建议关联时，编号必须属于本次候选。证据只能引用反馈或本次候选。参考答案供后续评估。遇到 API 错误或模型结果未通过校验，在线命令返回错误。去掉 `--online` 可直接运行离线规则。
-
-## 第 7 天网页演示
-
-在仓库根目录安装依赖并启动单页。终端会显示本地页面地址。
+使用 Python 3.12 或 3.13。在 GitHub 选择 **Code → Download ZIP** 后解压，或用 Git 克隆仓库。进入含 `app.py` 和 `requirements.txt` 的目录，运行：
 
 ```bash
 python -m pip install -r requirements.txt
 python -m streamlit run app.py
 ```
 
-在 **Feedback** 选择 **Example** 回放工单，默认是 #293585。也可选择 **New feedback** 输入英文标题和症状，按需填写 VS Code 版本和复现步骤。点击 **Run triage** 后，右侧显示建议、追问和相似工单原文链接。
+打开终端显示的 **Local URL**。保留 **Example → #293585 → Offline rules**，点击 **Run triage**。安装依赖后，离线模式可直接在本机运行。
 
-默认使用 **Offline rules**。要用 **Gemini**，先在启动页面的同一个终端按第 6 天的方法设置 `GEMINI_API_KEY`，在页面选择 **Gemini** 再提交。该模式会发送本条反馈和最多三条历史候选，并展示模型引用的依据。网页和命令行共用分流代码。
+### 网页演示
 
-## 第 8 天离线恢复与交接
+样例 [#293585](https://github.com/microsoft/vscode/issues/293585) 报告尝试在终端运行命令时没有输出。第一名候选 [#288707](https://github.com/microsoft/vscode/issues/288707) 描述的是键入的字符看不见。页面给出 **Ask for more information**，请经办人先确认字符是否可见，再决定怎样处理。
 
-网页上的 Gemini 请求失败时，点击 **Run offline rules** 可对同一条已提交反馈运行离线规则。结果会标明实际模式。检索为空时，页面会提示当前工单库中没有找到匹配的历史记录。
+![Windows 上的离线演示，样例 #293585 建议先补信息，第一名候选是 #288707](docs/images/offline-demo.png)
 
-在 **Handoff summary** 中核对、编辑并复制交接草稿。草稿包含原反馈、处理建议和可用的追问、依据或链接。每次提交成功后会生成一份新草稿。
+<details>
+<summary>查看 Gemini 主案例实测截图</summary>
 
-## 第 9 天独立评估集
+![Windows 上的 Gemini 演示，右栏显示补信息问题和可打开原文的判断依据](docs/images/gemini-demo.png)
 
-冻结 12 条来自公开工单的独立反馈。建议关联、先补信息和建议新建各 4 条。每条参考答案都附维护者评论。正式对照使用 30 条种子工单与 4 条评估专用历史工单，并按反馈提交时间筛选可见记录。文件用途和标注口径见[工单数据说明](data/README.md#独立评估集)。
+</details>
 
-## 第 10 天逐例评估
+两张截图均来自 Day 7 的 Windows 本机演示。当前版本还可以选择 **New feedback** 输入英文反馈。提交后在 **Handoff summary** 核对、编辑并复制交接草稿。
+
+## 使用 Gemini
+
+在启动应用的同一个终端设置 `GEMINI_API_KEY`。Windows PowerShell 可使用隐藏输入：
+
+```powershell
+$env:GEMINI_API_KEY = [System.Net.NetworkCredential]::new("", (Read-Host "Gemini API Key" -AsSecureString)).Password
+python -m streamlit run app.py
+```
+
+网页选择 **Gemini** 再提交。当前反馈和最多三条候选会发给模型，默认模型为 `gemini-3.5-flash-lite`。需要切换到账号可用且支持结构化输出的模型时，设置 `GEMINI_MODEL`。请求失败时，**Run offline rules** 可用同一条已提交反馈运行离线规则。
+
+也可以在终端直接试主案例：
+
+```bash
+python triage.py 293585
+python triage.py 293585 --online
+```
+
+## 效果评估与复跑
+
+12 条预先确定的独立样例，在「建议关联」「先补信息」「建议新建」三类各 4 条。两种模式共用 30 条种子工单与 4 条评估专用工单，按每条反馈的提交时间筛选历史记录。
+
+| 指标 | 离线规则 | Gemini 3.5 Flash Lite |
+| --- | ---: | ---: |
+| 分流动作正确 | 4/12 | 10/12 |
+| 参考工单排第一 | 4/4 | 4/4 |
+| 正确关联到参考工单 | 0/4 | 4/4 |
+| 应补信息且判断正确 | 4/4 | 2/4 |
+| 应新建且判断正确 | 0/4 | 4/4 |
+
+两种模式的候选和相似度逐项一致。离线规则把 12 条都判为先补信息。Gemini 的两条错误是把仍缺复现细节的反馈建议新建。4 条参考工单均已收入评估库。逐例输出、失败原因和指标分母见 [Day 10 评估记录](eval/day10_results.md)。
 
 ```bash
 python evaluate.py --output day10-offline.json
 python evaluate.py --online --output day10-gemini.json
+python -m unittest discover -s tests -v
 ```
 
-两条命令使用同一份冻结样例。在线命令沿用第 6 天的 `GEMINI_API_KEY` 配置。JSON 记录每条的参考答案、分流建议、候选和失败环节，便于定位是检索漏掉目标、分流判断有误，还是在线请求失败。
+前两条命令生成逐例 JSON，在线命令使用同一终端的 `GEMINI_API_KEY`。最后一条运行自动测试。评估脚本先完成全部预测，再读取参考答案。工单字段、样例来源和参考答案见[数据说明](data/README.md)。
 
-12 条实测中，离线规则动作正确 4/12，Gemini 3.5 Flash Lite 动作正确 10/12。两种模式的候选排序与分数一致，4 条参考工单全部排在首位。Gemini 正确关联了 4 条参考工单，把两条应追问的反馈判成了建议新建。逐例结果和失败分析见 [Day 10 评估记录](eval/day10_results.md)。
+## 分流是怎么做的
+
+1. **筛历史**。只查反馈提交前已经存在的工单。
+2. **找候选**。用工单标题和症状摘要做 TF-IDF 向量化，再用余弦相似度取最多三条正分候选。
+3. **给建议**。离线模式按首位候选的分数和 VS Code 版本执行规则。Gemini 比较候选的症状、触发条件和缺失信息。程序校验关联编号及证据引用，按已有记录补上链接。
+
+离线规则的关联条件是相似度达到 0.45 且双方有相同的 VS Code 版本。其余达到 0.25 的情况先追问。低于 0.25 或没有候选时，有复现步骤则建议新建，否则先追问。网页和命令行共用同一套分流函数。
+
+| 入口 | 用途 |
+| --- | --- |
+| [`app.py`](app.py) | Streamlit 网页和交接摘要 |
+| [`triage.py`](triage.py) | 搜索候选、分流和单例命令行 |
+| [`history.py`](history.py) | 按提交时间筛选历史工单 |
+| [`model_review.py`](model_review.py) | 调用 Gemini 并核对返回内容 |
+| [`evaluate.py`](evaluate.py) | 独立评估、汇总和逐例输出 |
+
+## 开发记录
+
+<details>
+<summary>展开 Day 1–11</summary>
+
+| 阶段 | 进度 |
+| --- | --- |
+| Day 1 | 确定业务范围、三类分流建议和演示案例。[PR #1](https://github.com/takahashifuwari/feedback-triage-agent/pull/1) |
+| Day 2 | 整理 4 条种子工单、4 条练习反馈和 4 条参考答案。[PR #2](https://github.com/takahashifuwari/feedback-triage-agent/pull/2) |
+| Day 3 | 补到 30 条候选并按提交时间过滤。用 `python history.py 293585` 可复跑，30 条中有 28 条早于该反馈。 |
+| Day 4 | 加入 TF-IDF 和分流规则。开发样例 #303822 的参考工单 #303202 排第七，未进前三。 |
+| Day 5 | 跑通离线演示，验证动作类别及关联编号。 |
+| Day 6 | 接入 Gemini，返回证据和追问。 |
+| Day 7 | 搭建 Streamlit 网页并完成 Windows 上的离线和 Gemini 验证。 |
+| Day 8 | 加入离线重试、空候选提示和可编辑的交接摘要。 |
+| Day 9 | 冻结 12 条独立评估反馈及参考答案。 |
+| Day 10 | 复跑离线规则与 Gemini，记录逐例结果和失败原因。 |
+| Day 11 | 整理快速开始、演示截图、评估复现说明。 |
+
+</details>
