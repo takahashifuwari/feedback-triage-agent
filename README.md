@@ -86,10 +86,16 @@ python -m unittest discover -s tests -v
 | [`model_review.py`](model_review.py) | 调用 Gemini 并核对返回内容 |
 | [`evaluate.py`](evaluate.py) | 独立评估、汇总和逐例输出 |
 
+## 许可证与版本
+
+项目代码采用 [MIT 许可证](LICENSE)。样例和评估数据保留了公开工单的原文链接及标注依据。[数据说明](data/README.md)
+
+首版功能、评估与运行方法见 [v0.1.0 发布说明](RELEASE_NOTES.md)。
+
 ## 开发记录
 
 <details>
-<summary>展开 Day 1–11</summary>
+<summary>展开 Day 1–13</summary>
 
 | 阶段 | 进度 |
 | --- | --- |
@@ -104,5 +110,7 @@ python -m unittest discover -s tests -v
 | Day 9 | 冻结 12 条独立评估反馈及参考答案。 |
 | Day 10 | 复跑离线规则与 Gemini，记录逐例结果和失败原因。 |
 | Day 11 | 整理快速开始、演示截图、评估复现说明。 |
+| Day 12 | 在全新的 Python 环境完成安装、启动与离线评估，16 项测试通过。 |
+| Day 13 | 准备首版许可证与发布说明。 |
 
 </details>
