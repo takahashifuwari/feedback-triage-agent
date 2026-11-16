@@ -94,12 +94,12 @@ PR 更新和推送 main 后，GitHub Actions 会在 Windows / Linux、Python 3.1
 
 项目代码采用 [MIT 许可证](LICENSE)。样例和评估数据保留了公开工单的原文链接及标注依据。[数据说明](data/README.md)
 
-首版功能、评估与运行方法见 [v0.1.0 发布说明](RELEASE_NOTES.md)。
+首版功能、评估与运行方法见 [v0.1.0 发布说明](RELEASE_NOTES.md)。当前已完成验收，版本标签与 GitHub Release 待创建，状态及操作见 [Day 15 发布记录](docs/day15-release.md)。
 
 ## 开发记录
 
 <details>
-<summary>展开 Day 1–14</summary>
+<summary>展开 Day 1–15</summary>
 
 | 阶段 | 进度 |
 | --- | --- |
@@ -116,7 +116,9 @@ PR 更新和推送 main 后，GitHub Actions 会在 Windows / Linux、Python 3.1
 | Day 11 | 整理快速开始、演示截图、评估复现说明。 |
 | Day 12 | 在全新的 Python 环境完成安装、启动与离线评估，16 项测试通过。 |
 | Day 13 | 准备首版许可证与发布说明。 |
-| Day 14 | 加入跨环境自动验收与冻结评估回归门槛。 |
+| Day 14 | 加入跨环境自动验收与冻结评估回归门槛，PR #14 已合并，本机验收通过。 |
+| Day 15 | 核对 main 四组验收并归档逐例结果与依赖版本，准备首版发布。[发布记录](docs/day15-release.md) |
 
 </details>
+
 

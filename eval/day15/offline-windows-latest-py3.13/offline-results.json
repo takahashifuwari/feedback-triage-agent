@@ -1,0 +1,418 @@
+{
+  "mode": "offline",
+  "python_version": "3.13.17",
+  "scikit_learn_version": "1.9.1",
+  "history_size": 34,
+  "metrics": {
+    "completed": {
+      "count": 12,
+      "total": 12
+    },
+    "action_accuracy": {
+      "count": 4,
+      "total": 12
+    },
+    "reference_top1": {
+      "count": 4,
+      "total": 4
+    },
+    "reference_top3": {
+      "count": 4,
+      "total": 4
+    },
+    "correct_links": {
+      "count": 0,
+      "total": 4
+    },
+    "false_links": {
+      "count": 0,
+      "total": 8
+    }
+  },
+  "cases": [
+    {
+      "issue_number": 239877,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 227498,
+          "score": 0.36262759325232186
+        },
+        {
+          "issue_number": 227137,
+          "score": 0.25377697683936884
+        },
+        {
+          "issue_number": 211807,
+          "score": 0.20645885803446468
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "create_new",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 247568,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 227498,
+          "score": 0.2782067314900719
+        },
+        {
+          "issue_number": 242713,
+          "score": 0.25571740631626017
+        },
+        {
+          "issue_number": 228098,
+          "score": 0.1926318561011375
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "create_new",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 248468,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 47816,
+          "score": 0.3982914261776989
+        },
+        {
+          "issue_number": 228098,
+          "score": 0.23621478704406607
+        },
+        {
+          "issue_number": 227498,
+          "score": 0.21379514370477143
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "create_new",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 251403,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 241827,
+          "score": 0.44795792191061745
+        },
+        {
+          "issue_number": 224582,
+          "score": 0.21090137462638664
+        },
+        {
+          "issue_number": 225119,
+          "score": 0.1684339203108243
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "link_existing",
+      "reference_duplicate_issue_number": 241827,
+      "reference_rank": 1,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 257058,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 239917,
+          "score": 0.2537408479058616
+        },
+        {
+          "issue_number": 227498,
+          "score": 0.25181111785820265
+        },
+        {
+          "issue_number": 229656,
+          "score": 0.2303305180472018
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "create_new",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 262330,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 227498,
+          "score": 0.2506387927052715
+        },
+        {
+          "issue_number": 226915,
+          "score": 0.24850315217172722
+        },
+        {
+          "issue_number": 228098,
+          "score": 0.23150776049676283
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "request_info",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [
+        "What exactly appears when Git Bash is selected, including any startup error or frozen prompt?",
+        "Can you share the Git Bash profile settings or a terminal trace from launch?"
+      ],
+      "failure_stage": null
+    },
+    {
+      "issue_number": 262861,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 47816,
+          "score": 0.42291424819881224
+        },
+        {
+          "issue_number": 236161,
+          "score": 0.17200692641490423
+        },
+        {
+          "issue_number": 256244,
+          "score": 0.1468219279607843
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "link_existing",
+      "reference_duplicate_issue_number": 47816,
+      "reference_rank": 1,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 275714,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 225119,
+          "score": 0.28482104795187363
+        },
+        {
+          "issue_number": 243294,
+          "score": 0.2614028113645279
+        },
+        {
+          "issue_number": 228098,
+          "score": 0.25636961062092856
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "request_info",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [
+        "Which command fails, and what exact error does it return?",
+        "Does the same command work in a local folder when run in the same shell?"
+      ],
+      "failure_stage": null
+    },
+    {
+      "issue_number": 281851,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 202410,
+          "score": 0.41167506957052846
+        },
+        {
+          "issue_number": 227498,
+          "score": 0.2901197113125069
+        },
+        {
+          "issue_number": 47816,
+          "score": 0.2659853559274179
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "link_existing",
+      "reference_duplicate_issue_number": 202410,
+      "reference_rank": 1,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 297309,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 242713,
+          "score": 0.33354515473970614
+        },
+        {
+          "issue_number": 288707,
+          "score": 0.2632251796144359
+        },
+        {
+          "issue_number": 256244,
+          "score": 0.19933973350934014
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "link_existing",
+      "reference_duplicate_issue_number": 242713,
+      "reference_rank": 1,
+      "reference_questions": [],
+      "failure_stage": "decision"
+    },
+    {
+      "issue_number": 305894,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 293305,
+          "score": 0.31493171525211305
+        },
+        {
+          "issue_number": 303202,
+          "score": 0.26524033505368133
+        },
+        {
+          "issue_number": 227498,
+          "score": 0.1913073415496961
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "request_info",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [
+        "Which operation is slow: opening the terminal, typing, or running a command?",
+        "What steps reproduce it, and roughly how long does the slowdown last?"
+      ],
+      "failure_stage": null
+    },
+    {
+      "issue_number": 305957,
+      "action": "request_info",
+      "linked_issue_number": null,
+      "model": null,
+      "matches": [
+        {
+          "issue_number": 228098,
+          "score": 0.43150388970607806
+        },
+        {
+          "issue_number": 229656,
+          "score": 0.22303713208036777
+        },
+        {
+          "issue_number": 227498,
+          "score": 0.17018648342579318
+        }
+      ],
+      "questions": [
+        "Can you see the characters you type in the terminal?",
+        "What output or error appears when opening it or after pressing Enter?"
+      ],
+      "evidence": [],
+      "error": null,
+      "expected_action": "request_info",
+      "reference_duplicate_issue_number": null,
+      "reference_rank": null,
+      "reference_questions": [
+        "What command or minimal script causes the crash?",
+        "Can you provide the exact error or a terminal trace from the crash?"
+      ],
+      "failure_stage": null
+    }
+  ]
+}
